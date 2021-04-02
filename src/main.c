@@ -23,6 +23,7 @@ int main(int argc, char** argv) {
     ccary_init(&cca);
 
     cca = ccary_append(cca, "Hello");
+    cca = ccary_append(cca, "World");
     ccary_display(cca);
 
     ccary_destroy(&cca);

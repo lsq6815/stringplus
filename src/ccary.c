@@ -40,10 +40,10 @@ ccary ccary_append(ccary cca, const char *str) {
     char **arr = cca.data;
     size_t size = cca.size;
 
-    /* incement the length of array */
+    /* increment the length of array */
     arr = realloc(arr, sizeof(char *) * (size + 1));
 
-    /* alloc space for new string */ 
+    /* allocate space for new string */ 
     arr[size] = malloc(strlen(str) + 1);
     strcpy(arr[size], str);
 
