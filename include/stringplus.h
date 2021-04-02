@@ -35,7 +35,7 @@ size_t indexamong(const char *str, const char *charset);
  * @param delims : a set of delimiter
  * @return a ccary which carry the result of split
  */
-ccary split(const char *str, const char *delims);
+pccary split(const char *str, const char *delims);
 
 /**
  * @brief join strings from @strset with @jch to a single string
@@ -44,6 +44,6 @@ ccary split(const char *str, const char *delims);
  * @param jch    : char used to join strings
  * @return a single string
  */
-char* join(ccary strset, char jch);
+char* join(pccary strset, char jch);
 
 #endif

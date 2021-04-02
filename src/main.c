@@ -14,20 +14,22 @@
 int main(int argc, char** argv) {
     const char *str1 = "Hello, world";
     size_t i;
-    if ((i = indexamong(str1, ", ")) != NOP) {
-        printf("Found %c in %s at %lu\n", 
+    if ((i = indexamong(str1, ",;")) != NOP) {
+        printf("Found '%c' in |%s| at %lu\n", 
                 str1[i], str1, i);
     } 
 
-    ccary cca;
-    ccary_init(&cca);
+    const char* rawstr = "8208180119-lsq_infosec";
+    printf("Split |%s| into: \n", rawstr);
 
-    cca = ccary_append(cca, "Hello");
-    cca = ccary_append(cca, "World");
-    ccary_display(cca);
+    pccary pcca = split(rawstr, "-_");
+    ccary_display(pcca);
 
-    ccary_destroy(&cca);
+    char* joinstr = join(pcca, '+');
+    printf("And join as |%s|\n", joinstr);
 
+    free(joinstr);
+    ccary_destroy(pcca);
     return 0;
 }
 

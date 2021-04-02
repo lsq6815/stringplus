@@ -10,17 +10,30 @@
 
 #include "../include/ccary.h"
 
-void ccary_init(pccary pcca) {
+pccary ccary_init() {
+    pccary pcca = malloc(sizeof(ccary));
     pcca->size = 0;
     pcca->data = NULL;
+    return pcca;
 }
 
 void ccary_destroy(pccary pcca) {
     size_t i;
+    /* free strings */
     for (i = 0; i < pcca->size; i++) 
         free(pcca->data[i]);
 
+    /* free array */
     free(pcca->data);
+    /* free the strut */
+    free(pcca);
+}
+
+void ccary_foreach(pccary pcca, ccary_foreach_func func) {
+    size_t i;
+    for (i = 0; i < pcca->size; i++) {
+        func(pcca->data[i]);
+    }
 }
 
 void ccary_clean(pccary pcca) {
@@ -29,32 +42,31 @@ void ccary_clean(pccary pcca) {
         free(pcca->data[i]);
 
     free(pcca->data);
-    ccary_init(pcca);
+    pcca->data = NULL;
+    pcca->size = 0;
 }
 
 size_t ccary_size(pccary pcca) {
     return pcca->size;
 }
  
-ccary ccary_append(ccary cca, const char *str) {
-    char **arr = cca.data;
-    size_t size = cca.size;
-
+void ccary_append(pccary pcca, const char *str) {
     /* increment the length of array */
-    arr = realloc(arr, sizeof(char *) * (size + 1));
+    pcca->data = realloc(pcca->data, sizeof(char *) * (pcca->size + 1));
 
     /* allocate space for new string */ 
-    arr[size] = malloc(strlen(str) + 1);
-    strcpy(arr[size], str);
+    pcca->data[pcca->size] = malloc(strlen(str) + 1);
+    strcpy(pcca->data[pcca->size], str);
 
-    ccary result = { size + 1, arr };
-    return result;
+    pcca->size += 1;
 }
 
-void ccary_display(ccary cca) {
-    size_t i;
-    for (i = 0; i < cca.size; i++) {
-        printf("|%s|\n", cca.data[i]);
-    }
-    printf("Total: %lu\n", ccary_size(&cca));
+static void* print_string(void *str) {
+    printf("|%s|\n", (char *)str);
+    return NULL;
+}
+
+void ccary_display(pccary pcca) {
+    ccary_foreach(pcca, print_string);
+    printf("Total: %lu\n", ccary_size(pcca));
 }
