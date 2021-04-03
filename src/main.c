@@ -12,11 +12,11 @@
 #include "../include/ccary.h"
 
 int main(int argc, char** argv) {
-    const char *str1 = "Hello, world";
+    const char *hello_world = "Hello, world";
     size_t i;
-    if ((i = indexamong(str1, ",;")) != NOP) {
+    if ((i = indexamong(hello_world, ",;")) != NOP) {
         printf("Found '%c' in |%s| at %lu\n", 
-                str1[i], str1, i);
+                hello_world[i], hello_world, i);
     } 
 
     const char* rawstr = "8208180119-lsq_infosec";

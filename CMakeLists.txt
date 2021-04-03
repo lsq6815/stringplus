@@ -15,5 +15,11 @@ set (MAIN_SRCS ./src/main.c)
 set (LIB_SRCS ./src/stringplus.c ./src/ccary.c)
 
 add_library (stringplus STATIC ${LIB_SRCS})
+set_target_properties (stringplus PROPERTIES PUBLIC_HEADER "./include/stringplus.h;./include/ccary.h")
 add_executable (app ${MAIN_SRCS})
 target_link_libraries (app stringplus)
+install (
+        TARGETS stringplus
+        ARCHIVE DESTINATION "lib"
+        PUBLIC_HEADER DESTINATION  "include"
+    )
