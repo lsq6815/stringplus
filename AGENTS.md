@@ -29,6 +29,7 @@ make
 - `ccary` 是动态字符串数组（`char**` + `size_t`）。调用者使用后必须调用 `ccary_destroy()`。
 - `split()` 和 `join()` 返回堆分配的数据；调用者负责释放。
 - `NOP` 宏（`-1`）用作"未找到"的哨兵值。
+- `ccary_foreach()` 的回调中调用 `free()` 会导致内存泄漏。
 
 ## Conventional Commits
 

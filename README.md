@@ -39,6 +39,8 @@ make
 | `ccary_display(pcca)` | 打印内容 |
 | `ccary_clean(pcca)` | 清空元素，保留容器 |
 
+> **注意：** `ccary_foreach()` 的回调中调用 `free()` 会导致内存泄漏。
+
 ## Conventional Commits
 
 本项目使用 [Conventional Commits](https://www.conventionalcommits.org/) 规范。提交信息必须符合以下格式：
