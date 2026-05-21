@@ -12,14 +12,14 @@ typedef struct _ccary {
     char** data;
 } ccary, *pccary;
 
-typedef void* ccary_foreach_func(void *);
+typedef void (*ccary_foreach_func)(void *);
 
 /**
  * @brief 构造并初始化一个 pccary
  *
  * @return 指向新 ccary 的指针
  */
-pccary ccary_init();
+pccary ccary_init(void);
 
 /**
  * @brief 销毁 @pcca 指向的 ccary，释放所有空间

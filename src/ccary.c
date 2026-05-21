@@ -1,16 +1,10 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdint.h>  /* 提供固定位数的整数类型 */
-#include <stddef.h>  /* 提供 ptrdiff_t、size_t 等定义 */
-#include <stdbool.h> /* 提供 _Bool 类型以及 false 和 true */
 #include <string.h>
-#include <ctype.h>
-#include <time.h>
-#include <math.h>
 
 #include "../include/ccary.h"
 
-pccary ccary_init() {
+pccary ccary_init(void) {
     pccary pcca = malloc(sizeof(ccary));
     pcca->size = 0;
     pcca->data = NULL;
@@ -61,12 +55,11 @@ void ccary_append(pccary pcca, const char *str) {
     pcca->size += 1;
 }
 
-static void* print_string(void *str) {
+static void print_string(void *str) {
     printf("|%s|\n", (char *)str);
-    return NULL;
 }
 
 void ccary_display(pccary pcca) {
     ccary_foreach(pcca, print_string);
-    printf("Total: %lu\n", ccary_size(pcca));
+    printf("Total: %zu\n", ccary_size(pcca));
 }

@@ -8,7 +8,7 @@
 #include <string.h>
 #include "ccary.h"
 
-#define NOP (-1)
+#define NOP ((size_t)-1)
 
 /**
  * @brief 查找 @ch 在 @str 中第一次出现的位置
