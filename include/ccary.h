@@ -32,15 +32,15 @@ void ccary_destroy(pccary pcca);
  * @brief foreach string in @pcca call @func
  * NOTE: calling free() in @func wiil caues memory leak!
  *
- * @param pcca pointer to ccary
- * @param func func to cope with string
+ * @param pcca : pointer to ccary
+ * @param func : func to cope with string
  */
 void ccary_foreach(pccary pcca, ccary_foreach_func func);
 
 /**
  * @brief clean all spaces pointed by @pcca, and set size to 0
  *
- * @param pcca pointed by @pcca
+ * @param pcca : pointer to ccary
  */
 void ccary_clean(pccary pcca);
 
@@ -63,7 +63,7 @@ void ccary_append(pccary pcca, const char *str);
 /**
  * @brief display content of @pcca
  *
- * @param pcca pointer to ccary
+ * @param pcca : pointer to ccary
  */
 void ccary_display(pccary pcca);
 
