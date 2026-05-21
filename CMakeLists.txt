@@ -9,6 +9,26 @@
 cmake_minimum_required (VERSION 3.10.0)
 project (stringplus)
 
+# Set C standard
+set(CMAKE_C_STANDARD 99)
+set(CMAKE_C_STANDARD_REQUIRED ON)
+
+# Compiler warnings
+if(CMAKE_C_COMPILER_ID MATCHES "GNU|Clang")
+    add_compile_options(
+        -Wall
+        -Wextra
+        -Werror
+        -pedantic
+        -Wstrict-prototypes
+        -Wmissing-prototypes
+        -Wold-style-definition
+        -Wshadow
+        -Wpointer-arith
+        -Wcast-qual
+    )
+endif()
+
 include_directories (./include)
 
 set (MAIN_SRCS ./src/main.c)
@@ -23,6 +43,10 @@ install (
         ARCHIVE DESTINATION "lib"
         PUBLIC_HEADER DESTINATION  "include"
     )
+
+# Testing
+enable_testing()
+add_subdirectory(tests)
 
 # Documentation generation with Doxygen
 find_package(Doxygen)
@@ -39,4 +63,26 @@ if(DOXYGEN_FOUND)
     )
 else()
     message(STATUS "Doxygen not found. Documentation will not be generated.")
+endif()
+
+# clang-tidy integration
+find_program(CLANG_TIDY_EXE NAMES clang-tidy)
+if(CLANG_TIDY_EXE)
+    set(CMAKE_C_CLANG_TIDY "${CLANG_TIDY_EXE}")
+    message(STATUS "clang-tidy found: ${CLANG_TIDY_EXE}")
+else()
+    message(STATUS "clang-tidy not found. Skipping clang-tidy checks.")
+endif()
+
+# Lint target (runs clang-tidy manually)
+if(CLANG_TIDY_EXE)
+    add_custom_target(lint
+        COMMAND ${CLANG_TIDY_EXE}
+            ${CMAKE_SOURCE_DIR}/src/*.c
+            ${CMAKE_SOURCE_DIR}/include/*.h
+            --
+            -I${CMAKE_SOURCE_DIR}/include
+        WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
+        COMMENT "Running clang-tidy..."
+    )
 endif()

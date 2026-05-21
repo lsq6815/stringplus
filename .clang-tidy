@@ -1,0 +1,13 @@
+Checks: >
+    bugprone-*,
+    clang-analyzer-*,
+    cppcoreguidelines-*,
+    performance-*,
+    portability-*,
+    readability-*,
+    -cppcoreguidelines-avoid-magic-numbers,
+    -readability-named-parameter
+
+WarningsAsErrors: '*'
+HeaderFilterRegex: '.*'
+FormatStyle: none
