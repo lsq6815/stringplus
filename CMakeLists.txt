@@ -32,7 +32,7 @@ if(DOXYGEN_FOUND)
         ${CMAKE_BINARY_DIR}/Doxyfile
         @ONLY
     )
-    add_custom_target(docs ALL
+    add_custom_target(docs
         COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_BINARY_DIR}/Doxyfile
         COMMENT "Generating API documentation with Doxygen"
         VERBATIM
