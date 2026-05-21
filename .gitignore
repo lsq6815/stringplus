@@ -54,6 +54,22 @@ dkms.conf
 # ccls cache
 .ccls-cache/
 
+# Build directory
+build/
+
+# Node.js
+node_modules/
+package-lock.json
+*.log
+npm-debug.log*
+
+# Husky internal files (auto-generated)
+.husky/_/
+
+# Environment
+.env
+.env.local
+
 .cmake/
 CMakeLists.txt.user
 CMakeCache.txt
