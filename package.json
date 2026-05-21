@@ -1,0 +1,27 @@
+{
+  "name": "stringplus",
+  "version": "1.0.0",
+  "description": "A small C library wrapping `string.h` with higher-level helpers, plus a dynamic string array (`ccary`). Built with [CMake](https://cmake.org) for practice.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "prepare": "husky"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/lsq6815/stringplus.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/lsq6815/stringplus/issues"
+  },
+  "homepage": "https://github.com/lsq6815/stringplus#readme",
+  "devDependencies": {
+    "@commitlint/cli": "^21.0.1",
+    "@commitlint/config-conventional": "^21.0.1",
+    "husky": "^9.1.7"
+  }
+}
