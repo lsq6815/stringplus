@@ -41,7 +41,7 @@ cmake --build .
 - 源文件中的 include 风格：`#include "../include/stringplus.h"`（相对于 `src/` 的相对路径）。
 - `ccary` 是动态字符串数组（`char**` + `size_t`）。调用者使用后必须调用 `ccary_destroy()`。
 - `split()` 和 `join()` 返回堆分配的数据；调用者负责释放。
-- `NOP` 宏（`-1`）用作"未找到"的哨兵值。
+- `NOP` 宏（`((size_t)-1)`）用作"未找到"的哨兵值。
 - `ccary_foreach()` 的回调中调用 `free()` 会导致内存泄漏。
 
 ## 注释风格
@@ -80,3 +80,10 @@ cmake --build .
 - `commitlint.config.js` — commitlint 规则
 - `.husky/commit-msg` — Git hook 脚本
 - `package.json` — husky + commitlint 依赖
+
+## 代码质量约束
+
+- 每次修改源代码后，**必须**执行构建（`cmake --build .`），确保编译器无警告（所有警告视为错误）。
+- 每次修改源代码后，**必须**执行测试（`ctest --output-on-failure`），确保所有测试通过。
+- 提交代码前，**必须**通过上述两项检查。
+- 如果安装了 clang-tidy，编译时会自动进行额外静态分析；也可通过 `cmake --build . --target lint` 手动运行。
