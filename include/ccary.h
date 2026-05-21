@@ -4,7 +4,7 @@
 #include <string.h>
 
 /**
- * A warping of c-style string array
+ * C 风格字符串数组的封装
  */
 
 typedef struct _ccary {
@@ -15,55 +15,55 @@ typedef struct _ccary {
 typedef void* ccary_foreach_func(void *);
 
 /**
- * @brief construct and init a pccary
+ * @brief 构造并初始化一个 pccary
  *
- * @return pointer to new ccary
+ * @return 指向新 ccary 的指针
  */
 pccary ccary_init();
 
 /**
- * @brief destroy ccary pointed by @pcca, free all spaces
+ * @brief 销毁 @pcca 指向的 ccary，释放所有空间
  *
- * @param pcca : pointer to ccary
+ * @param pcca : 指向 ccary 的指针
  */
 void ccary_destroy(pccary pcca);
 
 /**
- * @brief foreach string in @pcca call @func
- * NOTE: calling free() in @func wiil caues memory leak!
+ * @brief 遍历 @pcca 中的每个字符串并调用 @func
+ * 注意：在 @func 中调用 free() 会导致内存泄漏！
  *
- * @param pcca : pointer to ccary
- * @param func : func to cope with string
+ * @param pcca : 指向 ccary 的指针
+ * @param func : 处理字符串的函数
  */
 void ccary_foreach(pccary pcca, ccary_foreach_func func);
 
 /**
- * @brief clean all spaces pointed by @pcca, and set size to 0
+ * @brief 清理 @pcca 指向的所有空间，并将 size 置为 0
  *
- * @param pcca : pointer to ccary
+ * @param pcca : 指向 ccary 的指针
  */
 void ccary_clean(pccary pcca);
 
 /**
- * @brief get size of ccary
+ * @brief 获取 ccary 的大小
  *
- * @param pcca : pointer to ccary
- * @return size of ccary
+ * @param pcca : 指向 ccary 的指针
+ * @return ccary 的大小
  */
 size_t ccary_size(pccary pcca);
 
 /**
- * @brief append @str to @pcca
+ * @brief 将 @str 追加到 @pcca
  *
- * @param pcca : pointer to ccary
- * @param str : c-style string
+ * @param pcca : 指向 ccary 的指针
+ * @param str  : C 风格字符串
  */
 void ccary_append(pccary pcca, const char *str);
 
 /**
- * @brief display content of @pcca
+ * @brief 显示 @pcca 的内容
  *
- * @param pcca : pointer to ccary
+ * @param pcca : 指向 ccary 的指针
  */
 void ccary_display(pccary pcca);
 

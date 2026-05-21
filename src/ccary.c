@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdint.h>  /* Supply integer type with exact bits */
-#include <stddef.h>  /* Supply some definition like ptrdiff_t, size_t etc. */
-#include <stdbool.h> /* Supply type _Bool, false and true */
+#include <stdint.h>  /* 提供固定位数的整数类型 */
+#include <stddef.h>  /* 提供 ptrdiff_t、size_t 等定义 */
+#include <stdbool.h> /* 提供 _Bool 类型以及 false 和 true */
 #include <string.h>
 #include <ctype.h>
 #include <time.h>
@@ -19,13 +19,13 @@ pccary ccary_init() {
 
 void ccary_destroy(pccary pcca) {
     size_t i;
-    /* free strings */
+    /* 释放字符串 */
     for (i = 0; i < pcca->size; i++) 
         free(pcca->data[i]);
 
-    /* free array */
+    /* 释放数组 */
     free(pcca->data);
-    /* free the strut */
+    /* 释放结构体 */
     free(pcca);
 }
 
@@ -51,10 +51,10 @@ size_t ccary_size(pccary pcca) {
 }
  
 void ccary_append(pccary pcca, const char *str) {
-    /* increment the length of array */
+    /* 增加数组长度 */
     pcca->data = realloc(pcca->data, sizeof(char *) * (pcca->size + 1));
 
-    /* allocate space for new string */ 
+    /* 为新字符串分配空间 */ 
     pcca->data[pcca->size] = malloc(strlen(str) + 1);
     strcpy(pcca->data[pcca->size], str);
 

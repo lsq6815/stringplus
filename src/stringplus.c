@@ -51,7 +51,7 @@ char* join(pccary strset, char jch) {
     for (i = 0; i < strset->size; i++) {
         len += strlen(strset->data[i]);
     }
-    /* number of jch to be add */
+    /* 需要添加的 jch 数量 */
     len += strset->size - 1;
     result = malloc(len + 1);
 

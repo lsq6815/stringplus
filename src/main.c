@@ -1,8 +1,8 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include <stdint.h>  /* Supply integer type with exact bits */
-#include <stddef.h>  /* Supply some definition like ptrdiff_t, size_t etc. */
-#include <stdbool.h> /* Supply type _Bool, false and true */
+#include <stdint.h>  /* 提供固定位数的整数类型 */
+#include <stddef.h>  /* 提供 ptrdiff_t、size_t 等定义 */
+#include <stdbool.h> /* 提供 _Bool 类型以及 false 和 true */
 #include <string.h>
 #include <ctype.h>
 #include <time.h>
