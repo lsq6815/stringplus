@@ -2,12 +2,26 @@
 
 小型 C 库，封装了 `string.h` 并提供更高级的辅助函数，外加动态字符串数组（`ccary`）。使用 [CMake](https://cmake.org) 构建，用于练习。
 
+## 依赖
+
+- [CMake](https://cmake.org) — 构建系统（必需）
+- [Doxygen](https://www.doxygen.nl/) — 文档生成（可选）
+- [Node.js](https://nodejs.org/) + npm — 用于 commitlint 和 husky（可选，开发提交检查）
+
+安装 Node 开发依赖：
+
+```bash
+npm install
+```
+
+> **注意：** 如果不需要提交信息检查和文档生成，可以跳过 npm 依赖和 Doxygen 的安装。CMake 为必需工具，需另行安装。
+
 ## 构建
 
 ```bash
 mkdir build && cd build
 cmake ..
-make
+cmake --build .
 ```
 
 生成 `libstringplus.a`（静态库）和 `app`（演示 / 测试运行器）。
@@ -18,7 +32,7 @@ make
 
 ```bash
 cd build
-make docs
+cmake --build . --target docs
 ```
 
 生成的 HTML 文档位于 `build/docs/html/index.html`，使用浏览器打开即可查看。
