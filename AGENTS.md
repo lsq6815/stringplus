@@ -31,6 +31,26 @@ make
 - `NOP` 宏（`-1`）用作"未找到"的哨兵值。
 - `ccary_foreach()` 的回调中调用 `free()` 会导致内存泄漏。
 
+## 注释风格
+
+- 所有公共 API 使用 [Doxygen](https://www.doxygen.nl/) 风格注释，便于自动生成文档
+- 格式要求：
+  - 使用 `/** ... */` 块注释
+  - 使用 `@brief` 描述函数功能
+  - 使用 `@param` 描述参数（格式：`@param name : 说明`）
+  - 使用 `@return` 描述返回值
+- 示例：
+  ```c
+  /**
+   * @brief index the first appearance of @ch in @str
+   *
+   * @param str : c-style string
+   * @param ch  : char to been index
+   * @return NOP if @str hasn't @ch, otherwise the index
+   */
+  size_t indexof(const char *str, int ch);
+  ```
+
 ## Conventional Commits
 
 项目采用 [Conventional Commits](https://www.conventionalcommits.org/) 规范，通过 commitlint + husky 在本地拦截不合规提交。
