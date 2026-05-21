@@ -12,6 +12,19 @@ make
 
 生成 `libstringplus.a`（静态库）和 `app`（演示 / 测试运行器）。
 
+## 文档生成
+
+本项目使用 [Doxygen](https://www.doxygen.nl/) 从源码注释自动生成 API 文档。
+
+```bash
+cd build
+make docs
+```
+
+生成的 HTML 文档位于 `build/docs/html/index.html`，使用浏览器打开即可查看。
+
+> **注意：** 需要事先安装 Doxygen。未安装时构建系统会自动跳过文档生成，不影响其他构建流程。
+
 ## API
 
 ### stringplus.h
