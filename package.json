@@ -1,6 +1,6 @@
 {
   "name": "stringplus",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "A small C library wrapping `string.h` with higher-level helpers, plus a dynamic string array (`ccary`). Built with [CMake](https://cmake.org) for practice.",
   "main": "index.js",
   "scripts": {
