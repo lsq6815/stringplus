@@ -96,6 +96,10 @@ cmake --build . --target lint
 - `commitlint.config.js` — commitlint 规则
 - `.husky/commit-msg` — Git hook 脚本
 
+## 构建约束
+
+- CMake 生成目录**必须**使用 `build/`，不得使用其他目录。
+
 ## 代码质量约束
 
 - 编译器警告全部视为错误（`-Werror`）。
