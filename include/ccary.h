@@ -7,7 +7,7 @@
  * C 风格字符串数组的封装
  */
 
-typedef struct _ccary {
+typedef struct ccary {
     size_t size;
     char** data;
 } ccary, *pccary;

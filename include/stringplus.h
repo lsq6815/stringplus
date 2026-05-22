@@ -17,7 +17,7 @@
  * @param ch  : 要查找的字符
  * @return 如果 @str 中没有 @ch 返回 NOP，否则返回下标
  */
-size_t indexof(const char *str, int ch);
+size_t indexof(const char *str, int chr);
 
 /**
  * @brief 查找 @charset 中任意字符在 @str 中第一次出现的位置

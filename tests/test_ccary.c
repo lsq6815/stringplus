@@ -57,10 +57,10 @@ static int test_ccary_size(void) {
     return 0;
 }
 
-static int foreach_count = 0;
+static int g_foreach_count = 0;  /* NOLINT(cppcoreguidelines-avoid-non-const-global-variables) */
 static void count_callback(void *str) {
     (void)str;
-    foreach_count++;
+    g_foreach_count++;
 }
 
 static int test_ccary_foreach(void) {
@@ -68,20 +68,37 @@ static int test_ccary_foreach(void) {
     ccary_append(pcca, "a");
     ccary_append(pcca, "b");
     ccary_append(pcca, "c");
-    foreach_count = 0;
+    g_foreach_count = 0;
     ccary_foreach(pcca, count_callback);
-    TEST_ASSERT_EQUAL(3, foreach_count);
+    TEST_ASSERT_EQUAL(3, g_foreach_count);
     ccary_destroy(pcca);
     return 0;
 }
 
+typedef int (*test_func_t)(void);
+
 int main(void) {
+    static const test_func_t test_funcs[] = {
+        test_ccary_init_destroy,
+        test_ccary_append,
+        test_ccary_append_empty_string,
+        test_ccary_clean,
+        test_ccary_size,
+        test_ccary_foreach,
+    };
+
+    static const char * const test_names[] = {
+        "test_ccary_init_destroy",
+        "test_ccary_append",
+        "test_ccary_append_empty_string",
+        "test_ccary_clean",
+        "test_ccary_size",
+        "test_ccary_foreach",
+    };
+
     TEST_START();
-    RUN_TEST(test_ccary_init_destroy);
-    RUN_TEST(test_ccary_append);
-    RUN_TEST(test_ccary_append_empty_string);
-    RUN_TEST(test_ccary_clean);
-    RUN_TEST(test_ccary_size);
-    RUN_TEST(test_ccary_foreach);
+    for (size_t idx = 0; idx < sizeof(test_funcs) / sizeof(test_funcs[0]); idx++) {
+        RUN_TEST_NAMED(test_funcs[idx], test_names[idx]);
+    }
     TEST_END();
 }

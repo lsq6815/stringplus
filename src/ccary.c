@@ -12,30 +12,32 @@ pccary ccary_init(void) {
 }
 
 void ccary_destroy(pccary pcca) {
-    size_t i;
+    size_t idx = 0;
     /* 释放字符串 */
-    for (i = 0; i < pcca->size; i++) 
-        free(pcca->data[i]);
+    for (idx = 0; idx < pcca->size; idx++) {
+        free(pcca->data[idx]);
+    }
 
     /* 释放数组 */
-    free(pcca->data);
+    free((void *)pcca->data);
     /* 释放结构体 */
     free(pcca);
 }
 
 void ccary_foreach(pccary pcca, ccary_foreach_func func) {
-    size_t i;
-    for (i = 0; i < pcca->size; i++) {
-        func(pcca->data[i]);
+    size_t idx = 0;
+    for (idx = 0; idx < pcca->size; idx++) {
+        func(pcca->data[idx]);
     }
 }
 
 void ccary_clean(pccary pcca) {
-    size_t i;
-    for (i = 0; i < pcca->size; i++) 
-        free(pcca->data[i]);
+    size_t idx = 0;
+    for (idx = 0; idx < pcca->size; idx++) {
+        free(pcca->data[idx]);
+    }
 
-    free(pcca->data);
+    free((void *)pcca->data);
     pcca->data = NULL;
     pcca->size = 0;
 }
@@ -43,14 +45,18 @@ void ccary_clean(pccary pcca) {
 size_t ccary_size(pccary pcca) {
     return pcca->size;
 }
- 
+
 void ccary_append(pccary pcca, const char *str) {
     /* 增加数组长度 */
-    pcca->data = realloc(pcca->data, sizeof(char *) * (pcca->size + 1));
+    char **tmp = (char **)realloc((void *)pcca->data, sizeof(char *) * (pcca->size + 1));
+    if (tmp == NULL) {
+        return;
+    }
+    pcca->data = tmp;
 
-    /* 为新字符串分配空间 */ 
+    /* 为新字符串分配空间 */
     pcca->data[pcca->size] = malloc(strlen(str) + 1);
-    strcpy(pcca->data[pcca->size], str);
+    memcpy(pcca->data[pcca->size], str, strlen(str) + 1);
 
     pcca->size += 1;
 }

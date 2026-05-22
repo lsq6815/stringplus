@@ -89,17 +89,38 @@ static int test_join_single_element(void) {
     return 0;
 }
 
+typedef int (*test_func_t)(void);
+
 int main(void) {
+    static const test_func_t test_funcs[] = {
+        test_indexof_found,
+        test_indexof_not_found,
+        test_indexamong_found,
+        test_indexamong_not_found,
+        test_split_normal,
+        test_split_multiple_delimiters,
+        test_split_consecutive_delimiters,
+        test_split_empty_string,
+        test_join_normal,
+        test_join_single_element,
+    };
+
+    static const char * const test_names[] = {
+        "test_indexof_found",
+        "test_indexof_not_found",
+        "test_indexamong_found",
+        "test_indexamong_not_found",
+        "test_split_normal",
+        "test_split_multiple_delimiters",
+        "test_split_consecutive_delimiters",
+        "test_split_empty_string",
+        "test_join_normal",
+        "test_join_single_element",
+    };
+
     TEST_START();
-    RUN_TEST(test_indexof_found);
-    RUN_TEST(test_indexof_not_found);
-    RUN_TEST(test_indexamong_found);
-    RUN_TEST(test_indexamong_not_found);
-    RUN_TEST(test_split_normal);
-    RUN_TEST(test_split_multiple_delimiters);
-    RUN_TEST(test_split_consecutive_delimiters);
-    RUN_TEST(test_split_empty_string);
-    RUN_TEST(test_join_normal);
-    RUN_TEST(test_join_single_element);
+    for (size_t idx = 0; idx < sizeof(test_funcs) / sizeof(test_funcs[0]); idx++) {
+        RUN_TEST_NAMED(test_funcs[idx], test_names[idx]);
+    }
     TEST_END();
 }

@@ -61,8 +61,21 @@
         } \
     } while (0)
 
+#define RUN_TEST_NAMED(test_func, name) \
+    do { \
+        printf("  Running %s ... ", name); \
+        if (test_func() == 0) { \
+            printf("PASSED\n"); \
+            passed++; \
+        } else { \
+            printf("FAILED\n"); \
+            failed++; \
+        } \
+    } while (0)
+
 #define TEST_START() \
-    int passed = 0, failed = 0; \
+    int passed = 0; \
+    int failed = 0; \
     printf("Running tests...\n");
 
 #define TEST_END() \

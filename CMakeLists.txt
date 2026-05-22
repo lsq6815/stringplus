@@ -13,6 +13,9 @@ project (stringplus)
 set(CMAKE_C_STANDARD 99)
 set(CMAKE_C_STANDARD_REQUIRED ON)
 
+# Export compile commands for clang-tidy
+set(CMAKE_EXPORT_COMPILE_COMMANDS ON)
+
 # Compiler warnings
 if(CMAKE_C_COMPILER_ID MATCHES "GNU|Clang")
     add_compile_options(
@@ -30,6 +33,43 @@ if(CMAKE_C_COMPILER_ID MATCHES "GNU|Clang")
 endif()
 
 include_directories (./include)
+
+# clang-tidy integration (must be before add_library/add_executable)
+find_program(CLANG_TIDY_EXE NAMES clang-tidy)
+if(CLANG_TIDY_EXE)
+    set(CLANG_TIDY_EXTRA_ARGS "")
+    if(WIN32 AND CMAKE_C_COMPILER_ID MATCHES "GNU")
+        # 帮助 clang-tidy 找到 MinGW 系统头文件
+        get_filename_component(COMPILER_DIR "${CMAKE_C_COMPILER}" DIRECTORY)
+        get_filename_component(COMPILER_ROOT "${COMPILER_DIR}" DIRECTORY)
+        set(MINGW_SYS_INCLUDE_CANDIDATES
+            "${COMPILER_ROOT}/x86_64-w64-mingw32/include"
+            "${COMPILER_ROOT}/i686-w64-mingw32/include"
+            "${COMPILER_ROOT}/mingw32/include"
+            "${COMPILER_ROOT}/include"
+        )
+        foreach(candidate ${MINGW_SYS_INCLUDE_CANDIDATES})
+            if(EXISTS "${candidate}/stdio.h")
+                list(APPEND CLANG_TIDY_EXTRA_ARGS "--extra-arg=-isystem${candidate}")
+                break()
+            endif()
+        endforeach()
+        # 获取 GCC target triplet 并传给 clang-tidy，确保正确解析 MinGW 头文件
+        execute_process(
+            COMMAND ${CMAKE_C_COMPILER} -dumpmachine
+            OUTPUT_VARIABLE GCC_TARGET
+            OUTPUT_STRIP_TRAILING_WHITESPACE
+        )
+        if(GCC_TARGET)
+            list(APPEND CLANG_TIDY_EXTRA_ARGS "--extra-arg=--target=${GCC_TARGET}")
+        endif()
+    endif()
+    # 设置编译时自动运行 clang-tidy
+    set(CMAKE_C_CLANG_TIDY "${CLANG_TIDY_EXE}" ${CLANG_TIDY_EXTRA_ARGS})
+    message(STATUS "clang-tidy found: ${CLANG_TIDY_EXE}")
+else()
+    message(STATUS "clang-tidy not found. Skipping clang-tidy checks.")
+endif()
 
 set (MAIN_SRCS ./src/main.c)
 set (LIB_SRCS ./src/stringplus.c ./src/ccary.c)
@@ -65,23 +105,14 @@ else()
     message(STATUS "Doxygen not found. Documentation will not be generated.")
 endif()
 
-# clang-tidy integration
-find_program(CLANG_TIDY_EXE NAMES clang-tidy)
-if(CLANG_TIDY_EXE)
-    set(CMAKE_C_CLANG_TIDY "${CLANG_TIDY_EXE}")
-    message(STATUS "clang-tidy found: ${CLANG_TIDY_EXE}")
-else()
-    message(STATUS "clang-tidy not found. Skipping clang-tidy checks.")
-endif()
-
 # Lint target (runs clang-tidy manually)
 if(CLANG_TIDY_EXE)
     add_custom_target(lint
         COMMAND ${CLANG_TIDY_EXE}
+            -p ${CMAKE_BINARY_DIR}
+            ${CLANG_TIDY_EXTRA_ARGS}
             ${CMAKE_SOURCE_DIR}/src/*.c
             ${CMAKE_SOURCE_DIR}/include/*.h
-            --
-            -I${CMAKE_SOURCE_DIR}/include
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
         COMMENT "Running clang-tidy..."
     )

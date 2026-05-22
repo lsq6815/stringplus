@@ -9,10 +9,11 @@ int main(int argc, char** argv) {
     (void)argc;
     (void)argv;
     const char *hello_world = "Hello, world";
-    size_t i;
-    if ((i = indexamong(hello_world, ",;")) != NOP) {
-        printf("Found '%c' in |%s| at %zu\n", 
-                hello_world[i], hello_world, i);
+    size_t idx = 0;
+    idx = indexamong(hello_world, ",;");
+    if (idx != NOP) {
+        printf("Found '%c' in |%s| at %zu\n",
+                hello_world[idx], hello_world, idx);
     } 
 
     const char* rawstr = "8208180119-lsq_infosec";
