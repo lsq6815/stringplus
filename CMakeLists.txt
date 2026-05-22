@@ -112,15 +112,41 @@ else()
     message(STATUS "Doxygen not found. Documentation will not be generated.")
 endif()
 
-# Lint target (runs clang-tidy manually)
+# Lint target (runs Doxygen and clang-tidy)
+set(LINT_COMMANDS)
+set(LINT_COMMENTS)
+
+if(DOXYGEN_FOUND)
+    list(APPEND LINT_COMMANDS
+        COMMAND ${DOXYGEN_EXECUTABLE} ${CMAKE_BINARY_DIR}/Doxyfile
+    )
+    list(APPEND LINT_COMMENTS "Doxygen")
+endif()
+
 if(CLANG_TIDY_EXE)
-    add_custom_target(lint
+    list(APPEND LINT_COMMANDS
         COMMAND ${CLANG_TIDY_EXE}
             -p ${CMAKE_BINARY_DIR}
             ${CLANG_TIDY_EXTRA_ARGS}
             ${CMAKE_SOURCE_DIR}/src/*.c
             ${CMAKE_SOURCE_DIR}/include/*.h
+    )
+    list(APPEND LINT_COMMENTS "clang-tidy")
+endif()
+
+if(LINT_COMMANDS)
+    set(LINT_COMMENT_STRING "")
+    foreach(comment ${LINT_COMMENTS})
+        if(LINT_COMMENT_STRING)
+            set(LINT_COMMENT_STRING "${LINT_COMMENT_STRING} + ${comment}")
+        else()
+            set(LINT_COMMENT_STRING "${comment}")
+        endif()
+    endforeach()
+    add_custom_target(lint
+        ${LINT_COMMANDS}
         WORKING_DIRECTORY ${CMAKE_SOURCE_DIR}
-        COMMENT "Running clang-tidy..."
+        COMMENT "Running ${LINT_COMMENT_STRING}..."
+        VERBATIM
     )
 endif()
