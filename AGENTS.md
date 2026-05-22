@@ -19,9 +19,8 @@ npm install
 ## 构建与测试
 
 ```bash
-mkdir -p build && cd build
-cmake ..
-cmake --build .
+cmake -S . -B build -G "MinGW Makefiles" -DCMAKE_C_COMPILER=gcc
+cmake --build build
 ```
 
 生成静态库 `libstringplus.a` 和可执行文件 `app`（演示 / 简易测试运行器）。
