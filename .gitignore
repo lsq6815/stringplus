@@ -59,7 +59,6 @@ build/
 
 # Node.js
 node_modules/
-package-lock.json
 *.log
 npm-debug.log*
 
