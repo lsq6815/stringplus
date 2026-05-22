@@ -71,16 +71,23 @@ else()
     message(STATUS "clang-tidy not found. Skipping clang-tidy checks.")
 endif()
 
-set (MAIN_SRCS ./src/main.c)
 set (LIB_SRCS ./src/stringplus.c ./src/ccary.c)
 
-add_library (stringplus STATIC ${LIB_SRCS})
+option(BUILD_SHARED_LIBS "Build stringplus as a shared library" OFF)
+
+if(BUILD_SHARED_LIBS)
+    add_library (stringplus SHARED ${LIB_SRCS})
+else()
+    add_library (stringplus STATIC ${LIB_SRCS})
+endif()
+
 set_target_properties (stringplus PROPERTIES PUBLIC_HEADER "./include/stringplus.h;./include/ccary.h")
-add_executable (app ${MAIN_SRCS})
-target_link_libraries (app stringplus)
+
 install (
         TARGETS stringplus
         ARCHIVE DESTINATION "lib"
+        LIBRARY DESTINATION "lib"
+        RUNTIME DESTINATION "bin"
         PUBLIC_HEADER DESTINATION  "include"
     )
 
