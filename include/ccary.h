@@ -11,7 +11,7 @@ typedef struct ccary ccary;
 /**
  * @brief 遍历回调函数类型
  */
-typedef void (*ccary_foreach_func)(void *);
+typedef void (*ccary_foreach_func)(const char *);
 
 /**
  * @brief 迭代器（不透明类型）
@@ -90,7 +90,7 @@ int ccary_append(ccary *ca, const char *str);
  *
  * @param ca : 指向 ccary 的指针
  */
-void ccary_display(ccary *ca);
+void ccary_display(const ccary *ca);
 
 /**
  * @brief 创建迭代器
