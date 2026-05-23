@@ -49,6 +49,23 @@
         } \
     } while (0)
 
+#define TEST_ASSERT_NULL(ptr) \
+    do { \
+        if ((ptr) != NULL) { \
+            fprintf(stderr, "ASSERTION FAILED at %s:%d: pointer is not NULL\n", __FILE__, __LINE__); \
+            return 1; \
+        } \
+    } while (0)
+
+#define TEST_ASSERT_EQUAL_INT(expected, actual) \
+    do { \
+        if ((expected) != (actual)) { \
+            fprintf(stderr, "ASSERTION FAILED at %s:%d: expected %d but got %d\n", \
+                    __FILE__, __LINE__, (int)(expected), (int)(actual)); \
+            return 1; \
+        } \
+    } while (0)
+
 #define RUN_TEST(test_func) \
     do { \
         printf("  Running %s ... ", #test_func); \
