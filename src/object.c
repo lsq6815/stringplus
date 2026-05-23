@@ -1,4 +1,3 @@
-#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -102,14 +101,14 @@ const char *obj_describe(object *obj) {
 }
 
 int obj_equals(object *a, object *b) {
-    if (a == NULL || b == NULL || a->isa == NULL) {
+    if (a == NULL || b == NULL || a->isa == NULL || b->isa == NULL) {
         return -1;
     }
     return a->isa->vtable.equals(a, b);
 }
 
 int obj_compare(object *a, object *b) {
-    if (a == NULL || b == NULL || a->isa == NULL) {
+    if (a == NULL || b == NULL || a->isa == NULL || b->isa == NULL) {
         return -1;
     }
     return a->isa->vtable.compare(a, b);
