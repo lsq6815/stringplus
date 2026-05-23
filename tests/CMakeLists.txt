@@ -13,3 +13,8 @@ add_test(NAME test_stringplus COMMAND test_stringplus)
 add_executable(test_ccary test_ccary.c)
 target_link_libraries(test_ccary stringplus)
 add_test(NAME test_ccary COMMAND test_ccary)
+
+# Test for object
+add_executable(test_object test_object.c)
+target_link_libraries(test_object stringplus)
+add_test(NAME test_object COMMAND test_object)
