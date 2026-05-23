@@ -37,11 +37,11 @@ void ccary_destroy(ccary *ca);
  * @brief 遍历 ccary 中的每个字符串并调用 func
  * 注意：在 func 中调用 free() 会导致内存泄漏！
  *
- * @param ca   : 指向 ccary 的指针
+ * @param ca   : 指向 const ccary 的指针
  * @param func : 处理字符串的函数
  * @return 0 表示成功，-1 表示失败
  */
-int ccary_foreach(ccary *ca, ccary_foreach_func func);
+int ccary_foreach(const ccary *ca, ccary_foreach_func func);
 
 /**
  * @brief 清理 ccary 中的所有元素，保留容量
