@@ -153,6 +153,9 @@ ccary_iterator *ccary_iterator_create(const ccary *ca) {
 }
 
 void ccary_iterator_destroy(ccary_iterator *it) {
+    if (it == NULL) {
+        return;
+    }
     free(it);
 }
 
