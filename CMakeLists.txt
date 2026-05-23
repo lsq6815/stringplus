@@ -71,7 +71,7 @@ else()
     message(STATUS "clang-tidy not found. Skipping clang-tidy checks.")
 endif()
 
-set (LIB_SRCS ./src/stringplus.c ./src/ccary.c)
+set (LIB_SRCS ./src/stringplus.c ./src/ccary.c ./src/object.c)
 
 option(BUILD_SHARED_LIBS "Build stringplus as a shared library" OFF)
 
