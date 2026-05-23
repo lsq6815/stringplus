@@ -7,13 +7,11 @@ set_target_properties(unity_obj PROPERTIES C_CLANG_TIDY "")
 
 # Test for stringplus
 add_executable(test_stringplus test_stringplus.c)
-set_target_properties(test_stringplus PROPERTIES C_CLANG_TIDY "")
 target_link_libraries(test_stringplus stringplus unity_obj)
 add_test(NAME test_stringplus COMMAND test_stringplus)
 
 # Test for ccary
 add_executable(test_ccary test_ccary.c)
-set_target_properties(test_ccary PROPERTIES C_CLANG_TIDY "")
 target_link_libraries(test_ccary stringplus unity_obj)
 add_test(NAME test_ccary COMMAND test_ccary)
 
