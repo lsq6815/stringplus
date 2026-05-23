@@ -29,63 +29,63 @@ static int test_indexamong_not_found(void) {
 }
 
 static int test_split_normal(void) {
-    pccary result = split("a-b-c", "-");
+    ccary *result = split("a-b-c", "-");
     TEST_ASSERT_NOT_NULL(result);
-    TEST_ASSERT_EQUAL_size_t(3, ccary_size(result));
-    TEST_ASSERT_EQUAL_STRING("a", result->data[0]);
-    TEST_ASSERT_EQUAL_STRING("b", result->data[1]);
-    TEST_ASSERT_EQUAL_STRING("c", result->data[2]);
+    TEST_ASSERT_EQUAL_size_t(3, ccary_get_size(result));
+    TEST_ASSERT_EQUAL_STRING("a", ccary_get_at(result, 0));
+    TEST_ASSERT_EQUAL_STRING("b", ccary_get_at(result, 1));
+    TEST_ASSERT_EQUAL_STRING("c", ccary_get_at(result, 2));
     ccary_destroy(result);
     return 0;
 }
 
 static int test_split_multiple_delimiters(void) {
-    pccary result = split("8208180119-lsq_infosec", "-_");
+    ccary *result = split("8208180119-lsq_infosec", "-_");
     TEST_ASSERT_NOT_NULL(result);
-    TEST_ASSERT_EQUAL_size_t(3, ccary_size(result));
-    TEST_ASSERT_EQUAL_STRING("8208180119", result->data[0]);
-    TEST_ASSERT_EQUAL_STRING("lsq", result->data[1]);
-    TEST_ASSERT_EQUAL_STRING("infosec", result->data[2]);
+    TEST_ASSERT_EQUAL_size_t(3, ccary_get_size(result));
+    TEST_ASSERT_EQUAL_STRING("8208180119", ccary_get_at(result, 0));
+    TEST_ASSERT_EQUAL_STRING("lsq", ccary_get_at(result, 1));
+    TEST_ASSERT_EQUAL_STRING("infosec", ccary_get_at(result, 2));
     ccary_destroy(result);
     return 0;
 }
 
 static int test_split_consecutive_delimiters(void) {
-    pccary result = split("a--b", "-");
+    ccary *result = split("a--b", "-");
     TEST_ASSERT_NOT_NULL(result);
-    TEST_ASSERT_EQUAL_size_t(2, ccary_size(result));
-    TEST_ASSERT_EQUAL_STRING("a", result->data[0]);
-    TEST_ASSERT_EQUAL_STRING("b", result->data[1]);
+    TEST_ASSERT_EQUAL_size_t(2, ccary_get_size(result));
+    TEST_ASSERT_EQUAL_STRING("a", ccary_get_at(result, 0));
+    TEST_ASSERT_EQUAL_STRING("b", ccary_get_at(result, 1));
     ccary_destroy(result);
     return 0;
 }
 
 static int test_split_empty_string(void) {
-    pccary result = split("", "-");
+    ccary *result = split("", "-");
     TEST_ASSERT_NOT_NULL(result);
-    TEST_ASSERT_EQUAL_size_t(0, ccary_size(result));
+    TEST_ASSERT_EQUAL_size_t(0, ccary_get_size(result));
     ccary_destroy(result);
     return 0;
 }
 
 static int test_join_normal(void) {
-    pccary pcca = ccary_init();
-    ccary_append(pcca, "Hello");
-    ccary_append(pcca, "world");
-    char *result = join(pcca, ' ');
+    ccary *ca = ccary_create(0);
+    ccary_append(ca, "Hello");
+    ccary_append(ca, "world");
+    char *result = join(ca, ' ');
     TEST_ASSERT_EQUAL_STRING("Hello world", result);
     free(result);
-    ccary_destroy(pcca);
+    ccary_destroy(ca);
     return 0;
 }
 
 static int test_join_single_element(void) {
-    pccary pcca = ccary_init();
-    ccary_append(pcca, "Hello");
-    char *result = join(pcca, ' ');
+    ccary *ca = ccary_create(0);
+    ccary_append(ca, "Hello");
+    char *result = join(ca, ' ');
     TEST_ASSERT_EQUAL_STRING("Hello", result);
     free(result);
-    ccary_destroy(pcca);
+    ccary_destroy(ca);
     return 0;
 }
 

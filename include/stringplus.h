@@ -35,7 +35,7 @@ size_t indexamong(const char *str, const char *charset);
  * @param delims : 分隔符集合
  * @return 包含分割结果的 ccary
  */
-pccary split(const char *str, const char *delims);
+ccary *split(const char *str, const char *delims);
 
 /**
  * @brief 使用 jch 将 strset 中的字符串连接成单个字符串
@@ -44,6 +44,6 @@ pccary split(const char *str, const char *delims);
  * @param jch    : 用于连接字符串的字符
  * @return 单个字符串
  */
-char* join(pccary strset, char jch);
+char* join(ccary *strset, char jch);
 
 #endif

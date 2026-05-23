@@ -6,7 +6,8 @@ Checks: >
     portability-*,
     readability-*,
     -cppcoreguidelines-avoid-magic-numbers,
-    -readability-named-parameter
+    -readability-named-parameter,
+    -readability-identifier-length
 
 WarningsAsErrors: '*'
 HeaderFilterRegex: '.*'
