@@ -84,6 +84,44 @@ static int test_object_hash(void) {
     return 0;
 }
 
+static int test_object_is_member_of_class(void) {
+    object *obj = object_create();
+    TEST_ASSERT_NOT_NULL(obj);
+    TEST_ASSERT_EQUAL_INT(1, obj_is_member_of_class(obj, &ObjectClass));
+    TEST_ASSERT_EQUAL_INT(0, obj_is_member_of_class(obj, NULL));
+    TEST_ASSERT_EQUAL_INT(0, obj_is_member_of_class(NULL, &ObjectClass));
+    obj_release(obj);
+    return 0;
+}
+
+static int test_object_is_kind_of_class(void) {
+    object *obj = object_create();
+    TEST_ASSERT_NOT_NULL(obj);
+    TEST_ASSERT_EQUAL_INT(1, obj_is_kind_of_class(obj, &ObjectClass));
+    TEST_ASSERT_EQUAL_INT(0, obj_is_kind_of_class(obj, NULL));
+    TEST_ASSERT_EQUAL_INT(0, obj_is_kind_of_class(NULL, &ObjectClass));
+    obj_release(obj);
+    return 0;
+}
+
+static int test_object_get_class(void) {
+    object *obj = object_create();
+    TEST_ASSERT_NOT_NULL(obj);
+    TEST_ASSERT(obj_get_class(obj) == &ObjectClass);
+    TEST_ASSERT_NULL(obj_get_class(NULL));
+    obj_release(obj);
+    return 0;
+}
+
+static int test_object_class_name(void) {
+    object *obj = object_create();
+    TEST_ASSERT_NOT_NULL(obj);
+    TEST_ASSERT_EQUAL_STRING("Object", obj_class_name(obj));
+    TEST_ASSERT_NULL(obj_class_name(NULL));
+    obj_release(obj);
+    return 0;
+}
+
 typedef int (*test_func_t)(void);
 
 int main(void) {
@@ -97,6 +135,10 @@ int main(void) {
         test_object_equals_null,
         test_object_compare,
         test_object_hash,
+        test_object_is_member_of_class,
+        test_object_is_kind_of_class,
+        test_object_get_class,
+        test_object_class_name,
     };
 
     static const char * const test_names[] = {
@@ -109,6 +151,10 @@ int main(void) {
         "test_object_equals_null",
         "test_object_compare",
         "test_object_hash",
+        "test_object_is_member_of_class",
+        "test_object_is_kind_of_class",
+        "test_object_get_class",
+        "test_object_class_name",
     };
 
     TEST_START();
