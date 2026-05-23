@@ -94,6 +94,36 @@ cmake --build . --target lint
 - `commitlint.config.js` — commitlint 规则
 - `.husky/commit-msg` — Git hook 脚本
 
+## 版本发布
+
+本项目使用 [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) 自动管理版本号、生成 CHANGELOG 和 git tag。
+
+**发布命令：**
+
+```bash
+npm run release                # 自动推断版本级别（patch/minor/major）
+npm run release -- --release-as minor   # 手动指定版本级别
+npm run release -- --release-as major
+npm run release -- --release-as 1.2.3   # 指定具体版本号
+```
+
+**发布流程：**
+
+1. 确保所有变更已提交且符合 Conventional Commits 规范
+2. 运行 `npm run release`（或带参数的变体）
+3. 工具将自动：
+   - 根据提交历史推断版本级别
+   - 更新 `package.json` 中的版本号
+   - 更新 `CHANGELOG.md`
+   - 创建版本提交并打 git tag
+4. 执行 `git push --follow-tags origin main` 推送 tag 到远程
+
+**注意事项：**
+
+- 发布前必须确保工作区干净（无未提交变更）
+- 所有提交必须符合 Conventional Commits 规范，否则版本推断可能不正确
+- tag 推送不会自动触发 CI/CD，需手动推送
+
 ## 构建约束
 
 - CMake 生成目录**必须**使用 `build/`，不得使用其他目录。

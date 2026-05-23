@@ -102,6 +102,26 @@ docs: 更新 README 中的 API 表格
 
 提交时会自动检查格式，不符合规范的提交将被拒绝。
 
+## 版本发布
+
+本项目使用 [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) 自动管理版本。基于 Conventional Commits 提交历史，自动推断版本号（patch/minor/major），并同步更新 `package.json`、`CHANGELOG.md` 和 git tag。
+
+```bash
+# 自动推断版本级别
+npm run release
+
+# 手动指定版本级别
+npm run release -- --release-as minor
+npm run release -- --release-as major
+npm run release -- --release-as 1.2.3
+```
+
+发布后将自动创建版本提交和 git tag，使用以下命令推送：
+
+```bash
+git push --follow-tags origin main
+```
+
 ## 许可证
 
 MIT
