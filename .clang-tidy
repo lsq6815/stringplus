@@ -10,5 +10,5 @@ Checks: >
     -readability-identifier-length
 
 WarningsAsErrors: '*'
-HeaderFilterRegex: '.*'
+HeaderFilterRegex: '^((?!tests[/\\]unity).)*$'
 FormatStyle: none
