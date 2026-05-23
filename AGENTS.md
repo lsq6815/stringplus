@@ -67,6 +67,7 @@ cmake --build . --target lint
 - `split()` 和 `join()` 返回堆分配的数据；调用者负责释放。
 - `NOP` 宏（`((size_t)-1)`）用作"未找到"的哨兵值。
 - `ccary_foreach()` 的回调中调用 `free()` 会导致内存泄漏。
+- **C 语言面向对象编码规范**：所有新结构的封装必须遵循 `docs/c-oop-coding-standard.md` 中定义的类型封装、构造函数/析构函数、信息隐藏、错误处理等规范。
 
 ## 注释风格
 
