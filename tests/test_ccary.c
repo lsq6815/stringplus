@@ -106,6 +106,49 @@ static int test_ccary_capacity_growth(void) {
     return 0;
 }
 
+static int test_ccary_null_params(void) { /* NOLINT(readability-function-cognitive-complexity) */
+    ccary *ca = ccary_create(0);
+    TEST_ASSERT_EQUAL_INT(-1, ccary_append(NULL, "str"));
+    TEST_ASSERT_EQUAL_INT(-1, ccary_append(ca, NULL));
+    TEST_ASSERT_EQUAL_INT(-1, ccary_foreach(NULL, count_callback));
+    TEST_ASSERT_EQUAL_INT(-1, ccary_foreach(ca, NULL));
+    TEST_ASSERT_EQUAL_INT(-1, ccary_clean(NULL));
+    TEST_ASSERT_EQUAL_size_t(0, ccary_get_size(NULL));
+    TEST_ASSERT_EQUAL_size_t(0, ccary_get_capacity(NULL));
+    TEST_ASSERT_NULL(ccary_get_at(NULL, 0));
+    TEST_ASSERT_NULL(ccary_iterator_create(NULL));
+    TEST_ASSERT_EQUAL(-1, ccary_iterator_has_next(NULL));
+    TEST_ASSERT_NULL(ccary_iterator_next(NULL));
+    ccary_destroy(ca);
+    return 0;
+}
+
+static int test_ccary_iterator_empty(void) {
+    ccary *ca = ccary_create(0);
+    ccary_iterator *it = ccary_iterator_create(ca);
+    TEST_ASSERT_NOT_NULL(it);
+    TEST_ASSERT_EQUAL(0, ccary_iterator_has_next(it));
+    TEST_ASSERT_NULL(ccary_iterator_next(it));
+    ccary_iterator_destroy(it);
+    ccary_destroy(ca);
+    return 0;
+}
+
+static int test_ccary_destroy_null(void) {
+    ccary_destroy(NULL);  /* Should not crash */
+    ccary_iterator_destroy(NULL);  /* Should not crash */
+    return 0;
+}
+
+static int test_ccary_foreach_empty(void) {
+    ccary *ca = ccary_create(0);
+    g_foreach_count = 0;
+    TEST_ASSERT_EQUAL_INT(0, ccary_foreach(ca, count_callback));
+    TEST_ASSERT_EQUAL(0, g_foreach_count);
+    ccary_destroy(ca);
+    return 0;
+}
+
 static int test_ccary_iterator(void) { /* NOLINT(readability-function-cognitive-complexity) */
     ccary *ca = ccary_create(0);
     ccary_iterator *it = NULL;
@@ -142,6 +185,10 @@ int main(void) {
         test_ccary_foreach,
         test_ccary_get_at_out_of_bounds,
         test_ccary_capacity_growth,
+        test_ccary_null_params,
+        test_ccary_iterator_empty,
+        test_ccary_destroy_null,
+        test_ccary_foreach_empty,
         test_ccary_iterator,
     };
 
@@ -155,6 +202,10 @@ int main(void) {
         "test_ccary_foreach",
         "test_ccary_get_at_out_of_bounds",
         "test_ccary_capacity_growth",
+        "test_ccary_null_params",
+        "test_ccary_iterator_empty",
+        "test_ccary_destroy_null",
+        "test_ccary_foreach_empty",
         "test_ccary_iterator",
     };
 
